@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Löfroth & Grabö — Låtövningar</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap');
+
+  :root {
+    --ink:       #2a1f14;
+    --ink-mid:   #5c4a33;
+    --ink-light: #9c8568;
+    --accent:    #7a4a22;
+    --accent-l:  #c98b4a;
+    --paper:     #f5f0e8;
+    --paper-dark:#ebe3d0;
+    --paper-mid: #ddd3bc;
+    --stripe:    rgba(122,74,34,0.06);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Lato', sans-serif;
+    min-height: 100vh;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    text-align: center;
+    padding: 4rem 1.5rem 3rem;
+    background: linear-gradient(180deg, var(--paper-dark) 0%, var(--paper) 100%);
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 28px,
+      var(--stripe) 28px,
+      var(--stripe) 29px
+    );
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent-l);
+    margin-bottom: 0.8rem;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 6vw, 3.6rem);
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-sub {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--ink-mid);
+    margin-bottom: 1.8rem;
+  }
+
+  .hero-rule {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    justify-content: center;
+    margin-bottom: 0;
+  }
+
+  .hero-rule::before,
+  .hero-rule::after {
+    content: '';
+    width: 60px;
+    height: 1px;
+    background: var(--accent-l);
+    opacity: 0.7;
+  }
+
+  .hero-rule span {
+    font-size: 1.1rem;
+    color: var(--accent-l);
+  }
+
+  /* ── SEARCH ── */
+  .search-wrap {
+    max-width: 480px;
+    margin: 2rem auto 0;
+    padding: 0 1.5rem;
+    position: relative;
+  }
+
+  .search-input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.6rem;
+    border: 1.5px solid var(--paper-mid);
+    border-radius: 6px;
+    background: #fff;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.9rem;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .search-input:focus { border-color: var(--accent-l); }
+  .search-input::placeholder { color: var(--ink-light); }
+
+  .search-icon {
+    position: absolute;
+    left: 2.1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--ink-light);
+    font-size: 0.9rem;
+    pointer-events: none;
+  }
+
+  /* ── GRID ── */
+  .grid-wrap {
+    max-width: 900px;
+    margin: 2.5rem auto 4rem;
+    padding: 0 1.5rem;
+  }
+
+  .grid-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 1.2rem;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 8px;
+    border: 1.5px solid var(--paper-mid);
+    padding: 1.3rem 1.4rem;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+    cursor: pointer;
+  }
+
+  .card:hover {
+    border-color: var(--accent-l);
+    box-shadow: 0 4px 16px rgba(122,74,34,0.12);
+    transform: translateY(-2px);
+  }
+
+  .card-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--paper-mid);
+    line-height: 1;
+    min-width: 2rem;
+    padding-top: 2px;
+    transition: color 0.2s;
+  }
+
+  .card:hover .card-num { color: var(--accent-l); }
+
+  .card-body { flex: 1; }
+
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 0.2rem;
+    line-height: 1.3;
+  }
+
+  .card-meta {
+    font-size: 0.72rem;
+    color: var(--ink-light);
+    font-weight: 300;
+  }
+
+  .card-lang {
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--paper-dark);
+    color: var(--ink-light);
+    border: 1px solid var(--paper-mid);
+    padding: 2px 7px;
+    border-radius: 2px;
+    margin-top: 0.5rem;
+    display: inline-block;
+  }
+
+  .card-arrow {
+    color: var(--paper-mid);
+    font-size: 1rem;
+    align-self: center;
+    transition: color 0.2s, transform 0.2s;
+  }
+
+  .card:hover .card-arrow {
+    color: var(--accent-l);
+    transform: translateX(3px);
+  }
+
+  .card.no-link {
+    opacity: 0.45;
+    cursor: default;
+    pointer-events: none;
+  }
+
+  .hidden { display: none !important; }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    border-top: 1px solid var(--paper-mid);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+  }
+
+  footer a {
+    color: var(--accent-l);
+    text-decoration: none;
+  }
+
+  footer a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <p class="hero-eyebrow">Löfroth & Grabö</p>
+  <h1 class="hero-title">Låtövningar</h1>
+  <p class="hero-sub">Öva texterna — vers för vers</p>
+  <div class="hero-rule"><span>♩</span></div>
+</div>
+
+<div class="search-wrap">
+  <span class="search-icon">🔍</span>
+  <input class="search-input" type="text" placeholder="Sök låt…" id="search" oninput="filterCards()">
+</div>
+
+<div class="grid-wrap">
+  <p class="grid-label" id="gridLabel">19 låtar</p>
+  <div class="grid" id="grid">
+
+    <a class="card" href="my-way.html" data-title="My Way">
+      <span class="card-num">01</span>
+      <div class="card-body">
+        <div class="card-title">My Way</div>
+        <div class="card-meta">Spelordning 1 · Öppningslåt</div>
+        <span class="card-lang">EN</span>
+      </div>
+      <span class="card-arrow">→</span>
+    </a>
+
+    <a class="card no-link" href="#" data-title="Senses">
+      <span class="card-num">02</span>
+      <div class="card-body">
+        <div class="card-title">Senses</div>
+        <div class="card-meta">Spelordning 2 · text kommer</div>
+        <span class="card-lang">EN</span>
+      </div>
+      <span class="card-arrow">–</span>
+    </a>
+
+    <a class="card no-link" href="#" data-title="Kärsta i maj">
+      <span class="card-num">03</span>
+      <div class="card-body">
+        <div class="card-title">Kärsta i maj</div>
+        <div class="card-meta">Spelordning 3 · övning kommer</div>
+        <span class="card-lang">SV</span>
+      </div>
+      <span class="card-arrow">–</span>
+    </a>
+
+    <a class="card no-link" href="#" data-title="Colors in my eye">
+      <span class="card-num">04</span>
+      <div class="card-body">
+        <div class="card-title">Colors in my eye</div>
+        <div class="card-meta">Spelordning 4 · text kommer</div>
+        <span class="card-lang">EN</span>
+      </div>
+      <span class="card-arrow">–</span>
+    </a>
+
+    <a class="card" href="i-sit-and-wait.html" data-title="I sit and wait">
+      <span class="card-num">05</span>
+      <div class="card-body">
+        <div class="card-title">I sit and wait</div>
+        <div class="card-meta">Spelordning 5 · Drag</div>
+        <span class="card-lang">EN</span>
+      </div>
+      <span class="card-arrow">→</span>
+    </a>
+
+    <a class="card" href="where-are-you-now.html" data-title="Where are you now">
+      <span class="card-num">06</span>
+      <div class="card-body">
+        <div class="card-title">Where are you now</div>
+        <div class="card-meta">Spelordning 6</div>
+        <span class="card-lang">EN</span>
+      </div>
+      <span class="card-arrow">→</span>
+    </a>
+
+    <a class="card no-link" href="#" data-title="Kom le med mig">
+      <span class="card-num">07</span>
+      <div class="card-body">
+        <div class="card-title">Kom le med mig</div>
+        <div class="card-meta">Spelordning 7 · övning kommer</div>
+        <span class="card-lang">SV</span>
+      </div>
+      <span class="card-arrow">–</span>
+    </a>
+
+    <a class="card" href="final-man.html" data-title="Final man">
+      <span class="card-num">08</span>
+      <div class="card-body">
+        <div class="card-title">Final man</div>
+        <div class="card-meta">Spelordning 8 · Drag</div>
+        <span class="card-lang">EN</span>
+      </div>
+      <span class="card-arrow">→</span>
+    </a>
+
+    <a class="card" href="simple-song.html" data-title="Simple song">
+      <span class="card-num">09</span>
+      <div class="card-body">
+        <div class="card-title">Simple song</div>
+        <div class="card-meta">Spelordning 9</div>
+        <span class="card-lang">EN</span>
+      </div>
+      <span class="card-arrow">→</span>
+    </a>
+
+    <a class="card" href="backa-bandet.html" data-title="Backa bandet">
+      <span class="card-num">10</span>
+      <div class="card-body">
+        <div class="card-title">Backa bandet</div>
+        <div class="card-meta">Spelordning 10 · Drag · Capo 2</div>
+        <span class="card-lang">SV</span>
+      </div>
+      <span class="card-arrow">→</span>
+    </a>
+
+    <a class="card" href="ingen-ska-fa-stora.html" data-title="Ingen ska få störa">
+      <span class="card-num">11</span>
+      <div class="card-body">
+        <div class="card-title">Ingen ska få störa</div>
+        <div class="card-meta">Spelordning 11 · Drag</div>
+        <span class="card-lang">SV</span>
+      </div>
+      <span class="card-arrow">→</span>
+    </a>
+
+    <a class="card" href="i-know-what-i-want.html" data-title="I know what I want">
+      <span class="card-num">12</span>
+      <div class="card-body">
+        <div class="card-title">I know what I want</div>
+        <div class="card-meta">Spelordning 12</div>
+        <span class="card-lang">EN</span>
+      </div>
+      <span class="card-arrow">→</span>
+    </a>
+
+    <a class="card" href="svartvattnets-kold.html" data-title="Svartvattnets köld">
+      <span class="card-num">13</span>
+      <div class="card-body">
+        <div class="card-title">Svartvattnets köld</div>
+        <div class="card-meta">Spelordning 13</div>
+        <span class="card-lang">SV</span>
+      </div>
+      <span class="card-arrow">→</span>
+    </a>
+
+    <a class="card no-link" href="#" data-title="Call you mine">
+      <span class="card-num">14</span>
+      <div class="card-body">
+        <div class="card-title">Call you mine</div>
+        <div class="card-meta">Spelordning 14 · text kommer</div>
+        <span class="card-lang">EN</span>
+      </div>
+      <span class="card-arrow">–</span>
+    </a>
+
+    <a class="card no-link" href="#" data-title="Warm days are over">
+      <span class="card-num">15</span>
+      <div class="card-body">
+        <div class="card-title">Warm days are over</div>
+        <div class="card-meta">övning kommer</div>
+        <span class="card-lang">EN</span>
+      </div>
+      <span class="card-arrow">–</span>
+    </a>
+
+    <a class="card" href="the-smile-you-see.html" data-title="The smile you see">
+      <span class="card-num">16</span>
+      <div class="card-body">
+        <div class="card-title">The smile you see</div>
+        <div class="card-meta"></div>
+        <span class="card-lang">EN</span>
+      </div>
+      <span class="card-arrow">→</span>
+    </a>
+
+    <a class="card" href="sommarnatts-vals.html" data-title="Sommarnatts vals">
+      <span class="card-num">17</span>
+      <div class="card-body">
+        <div class="card-title">Sommarnatts vals</div>
+        <div class="card-meta"></div>
+        <span class="card-lang">SV</span>
+      </div>
+      <span class="card-arrow">→</span>
+    </a>
+
+    <a class="card" href="tar-en-sekund.html" data-title="Tar en sekund">
+      <span class="card-num">18</span>
+      <div class="card-body">
+        <div class="card-title">Tar en sekund</div>
+        <div class="card-meta"></div>
+        <span class="card-lang">SV</span>
+      </div>
+      <span class="card-arrow">→</span>
+    </a>
+
+    <a class="card" href="the-things-you-hide.html" data-title="The things you hide">
+      <span class="card-num">19</span>
+      <div class="card-body">
+        <div class="card-title">The things you hide</div>
+        <div class="card-meta"></div>
+        <span class="card-lang">EN</span>
+      </div>
+      <span class="card-arrow">→</span>
+    </a>
+
+  </div>
+</div>
+
+<footer>
+  Löfroth & Grabö &nbsp;·&nbsp; Örebro &nbsp;·&nbsp; ♩ &nbsp;·&nbsp;
+  <a href="https://loftoth0grabo.lovable.app/" target="_blank">Besök webbsidan</a>
+</footer>
+
+<script>
+function filterCards() {
+  const q = document.getElementById('search').value.toLowerCase().trim();
+  const cards = document.querySelectorAll('.card');
+  let visible = 0;
+  cards.forEach(c => {
+    const title = c.dataset.title.toLowerCase();
+    const show = !q || title.includes(q);
+    c.classList.toggle('hidden', !show);
+    if (show) visible++;
+  });
+  document.getElementById('gridLabel').textContent =
+    q ? `${visible} träff${visible !== 1 ? 'ar' : ''}` : '19 låtar';
+}
+</script>
+
+</body>
+</html>
